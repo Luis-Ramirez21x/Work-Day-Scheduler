@@ -7,10 +7,8 @@ console.log(date);
 
 
 var currentTime = moment().format('H');
-//console.log(currentTime);
-var adjCurrentTime = currentTime - 12;
-//console.log(adjCurrentTime);
 
+var adjCurrentTime = currentTime - 12;
 
 
 function createTimeBlocks(){
@@ -23,9 +21,10 @@ for(i = 0; i< 9; i++){
     divEl.addClass('time-block')
     hourEL.addClass('hour');
     //textEl.addClass('past');
-    textEl.attr("data-index", i);
-    saveBtnEl.addClass('saveBtn').text('SAVE');
     
+    textEl.attr("id", i);
+    textEl.val(localStorage.getItem(i));
+    saveBtnEl.addClass('saveBtn').text('SAVE');
     plannerEl.append(divEl);
     divEl.append(hourEL);
     divEl.append(textEl);
@@ -53,40 +52,23 @@ for(i = 0; i< 9; i++){
             textEl.addClass('present');
         } else{
             textEl.addClass('future');
-        }
-       
-        
+        }    
     }
-
-    
-
-
-
-    
 }
-}
-
-
-
-
-function saveToLocal(){
-    console.log(date);
 }
 
 createTimeBlocks();
 var saveBtn = $('.saveBtn');
-plannerEl.on('click', function(){
-    var id = $(this).attr('data-index');
-    console.log(id);
-    
-    
 
-
-    console.log(element);
-})
-/*
-var element = event.target;
-if(element.matches('button') === true){
-    var index = element.parentElement.getAttribute("data-index");
+saveBtn.on('click', function(event){
+    
+    var element = event.target;
+    var index = element.parentElement.children[1].getAttribute("id");
+    
+    var userInput = $('#'+index).val();
     console.log(index);
-}*/
+    console.log(userInput);
+    localStorage.setItem(index , userInput);
+    
+
+})
